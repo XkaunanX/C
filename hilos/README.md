@@ -23,16 +23,6 @@ En el codigo que se presenta mas adelante, se utilizan semaforos y funciones de 
 
 # Librerias
 
-### `#include <unistd.h>`
-Esta libreria proporciona acceso a funciones y constantes del sistema operativo Unix. Es fundamental para interactuar con el sistema operativo y realizar diversas operaciones, como lectura y escritura de archivos, gestion de procesos, y control de dispositivos.
-
-#### Funciones importantes:
-- **Lectura y escritura de archivos**: `read()`, `write()`
-- **Gestion de procesos**: `fork()`, `exec()`, `getpid()`
-- **Control de dispositivos**: `open()`, `close()`
-- **Manipulacion de directorios**: `chdir()`, `getcwd()`
-- **Uso de identificadores de usuario y grupo**: `getuid()`, `getgid()`
-
 ### `#include <pthread.h>`
 Esta libreria proporciona una interfaz para trabajar con hilos en programas concurrentes. Permite crear y gestionar multiples hilos dentro de un proceso, facilitando la ejecucion paralela de tareas.
 
