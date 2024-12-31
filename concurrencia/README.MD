@@ -26,8 +26,6 @@ En muchos casos, el proceso padre y los procesos hijos necesitan intercambiar in
 - **Sincronizacion**: Cuando multiples procesos hijos estan trabajando en tareas relacionadas, puede ser necesario sincronizarlos para evitar condiciones de carrera o accesos simultaneos a recursos compartidos.
 - **Manejo de errores**: Es crucial manejar adecuadamente los errores en la creacion y ejecucion de los procesos hijos, para evitar que el sistema quede en un estado inconsistente.
 
----
-
 # Creacion de Procesos Hijos y la PCB en C
 
 Cuando un proceso crea un proceso hijo en C, utilizando la funcion `fork()`, el proceso hijo hereda varios atributos del proceso padre. Uno de los elementos mas importantes que se copia es la **PCB** (Process Control Block, Bloque de Control del Proceso).
@@ -83,8 +81,6 @@ La libreria `unistd.h` proporciona acceso a funciones y constantes del sistema o
 - **Manipulacion de directorios**: `chdir()`, `getcwd()`
 - **Uso de identificadores de usuario y grupo**: `getuid()`, `getgid()`
 
----
-
 ## Funciones de Gestion de Procesos
 
 ### `int pid = fork();`
@@ -108,8 +104,6 @@ La funcion `getppid()` devuelve el identificador del proceso padre del proceso a
 #### Retorno:
 - Devuelve el **PID** del proceso padre, lo cual es util cuando un proceso hijo necesita conocer quien lo creo, por ejemplo, para gestionar registros o realizar operaciones de depuracion.
 
----
-
 ## Funciones de Terminacion y Control de Procesos
 
 ### `exit(0);`
@@ -125,8 +119,6 @@ Llama a `exit()` con el codigo de salida `EXIT_FAILURE`, lo que indica que el pr
 ### `perror("Error al crear el proceso H1");`
 La funcion `perror()` imprime un mensaje de error en la salida estandar que describe por que una operacion fallo, utilizando la variable global `errno` para obtener detalles del error.
 
----
-
 ## Ejecucion de Comandos del Sistema
 
 ### `system("./script.sh");`
@@ -138,8 +130,6 @@ La funcion `system()` se utiliza para ejecutar un comando del sistema operativo 
   - Si el comando se ejecuta correctamente, devuelve el codigo de salida del shell.
   - Si ocurre un error (por ejemplo, si el comando no existe), devuelve un valor negativo.
 - **Bloqueo**: La funcion `system()` bloquea la ejecucion del programa original hasta que el comando haya terminado de ejecutarse.
-
----
 
 ## Reemplazo de Proceso
 
@@ -155,8 +145,6 @@ La funcion `execl()` reemplaza el proceso actual con un nuevo programa. En este 
 #### Comportamiento:
 - **Reemplazo de proceso**: El proceso original se reemplaza completamente por el nuevo proceso que se esta ejecutando.
 - Si `execl()` se ejecuta correctamente, **no retorna** al proceso original. Si hay un error, devuelve **-1** y se puede utilizar `errno` para obtener detalles del fallo.
-
----
 
 ## Espera de un Proceso Hijo
 
@@ -175,8 +163,6 @@ La funcion `wait()` permite que un proceso padre espere a que uno de sus proceso
 - **Bloqueo**: `wait()` bloquea al proceso padre hasta que el hijo termine. Esto es util cuando el padre necesita esperar resultados de su hijo o asegurar que el hijo haya completado su tarea.
 - **Multiples Hijos**: Si el proceso tiene varios hijos, puede llamar a `wait()` en un bucle o usar `waitpid()` con los PIDs de los hijos.
 
----
-
 # Tipos de creacion de procesos hijos
 
 ## 1. Creacion Lineal de Procesos Hijos
@@ -189,8 +175,6 @@ La creacion lineal de procesos hijos implica que cada proceso padre crea un solo
 - **Control del padre**: El proceso padre tiene control sobre cuando y cuantos hijos se crean.
 - **Ideal para**: Situaciones donde se necesita un control estricto sobre la creacion y ejecucion de los procesos hijos.
 
----
-
 ## 2. Creacion Exponencial de Procesos Hijos
 
 ### Descripcion
@@ -200,8 +184,6 @@ En la creacion exponencial de procesos hijos, cada proceso creado (ya sea un pro
 - **Crecimiento rapido**: La cantidad de procesos crece exponencialmente, lo que puede generar muchos procesos en poco tiempo.
 - **Menos control**: El padre no tiene un control preciso sobre la cantidad exacta de procesos que se crean debido al comportamiento exponencial.
 - **Ideal para**: Escenarios que requieren crear muchos procesos en poco tiempo, como en tareas paralelizadas a gran escala.
-
----
 
 ## 3. Creacion en Arbol (Jerarquica)
 
@@ -213,8 +195,6 @@ En la creacion en arbol de procesos, cada proceso padre crea multiples procesos 
 - **Escalable**: El numero de procesos puede crecer de manera controlada, permitiendo una mejor gestion.
 - **Ideal para**: Situaciones en las que los procesos deben organizarse de manera jerarquica y gestionarse de manera eficiente.
 
----
-
 ## 4. Creacion en Paralelo (Sincronizacion Opcional)
 
 ### Descripcion
@@ -224,5 +204,3 @@ En la creacion en paralelo, multiples procesos son creados simultaneamente, sin 
 - **Ejecucion simultanea**: Los procesos hijos se ejecutan de manera paralela.
 - **Sincronizacion opcional**: No se requiere que el padre espere la finalizacion de los hijos antes de crear mas.
 - **Ideal para**: Tareas que se pueden ejecutar en paralelo sin necesidad de secuenciar los procesos.
-
----
