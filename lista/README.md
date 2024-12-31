@@ -40,9 +40,6 @@ La lista enlazada es util para aplicaciones que requieren operaciones frecuentes
 
 # Tipos de listas
 
-
-
-
 ## Lista Simplemente Enlazada
 
 Una **lista simplemente enlazada** es una estructura de datos donde cada elemento (nodo) contiene un valor y un puntero (o enlace) al siguiente nodo en la lista.
