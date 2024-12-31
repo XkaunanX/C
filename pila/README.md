@@ -35,8 +35,6 @@ La **pila LIFO** es la forma basica de pila y sigue estrictamente el principio *
 ### Ventajas:
 - **Simplicidad**: Es facil de implementar y muy eficiente para problemas que requieren un acceso LIFO.
 
----
-
 ## Pila Reversible
 
 Una **pila reversible** es una pila que permite invertir el orden de los elementos, es decir, puedes recorrerla desde el ultimo elemento hasta el primero o viceversa.
@@ -49,8 +47,6 @@ Una **pila reversible** es una pila que permite invertir el orden de los element
 ### Uso comun:
 - Procesamiento de datos que necesitan ser recorridos en ambas direcciones.
 - Implementacion de algoritmos que requieren tanto un acceso secuencial como reverso a los elementos.
-
----
 
 ## Pila de Prioridad
 
@@ -65,8 +61,6 @@ Una **pila de prioridad** es una variacion de la pila estandar en la que cada el
 - Sistemas que requieren la ejecucion de tareas segun su urgencia (como en la planificacion de procesos de un sistema operativo).
 - Algoritmos como Dijkstra para encontrar el camino mas corto en un grafo.
 
----
-
 ## Pila Multiple
 
 Una **pila multiple** es una estructura que permite tener varias pilas independientes en una sola estructura de datos.
@@ -79,8 +73,6 @@ Una **pila multiple** es una estructura que permite tener varias pilas independi
 ### Uso comun:
 - Gestion de multiples tareas en paralelo o simulacion de multiples pilas en un sistema de procesamiento.
 - Aplicaciones que requieren multiples pilas de manera eficiente, como en la simulacion de memoria compartida.
-
----
 
 ## Pila Circular
 
@@ -95,8 +87,6 @@ Una **pila circular** es una variante de la pila que, al igual que la lista circ
 - Implementacion de buffers circulares, donde los datos se reciclan continuamente.
 - Aplicaciones donde se debe asegurar el uso eficiente del espacio, como en estructuras de datos de tipo "stack" con tamaño fijo.
 
----
-
 ## Comparacion de Tipos de Pilas
 
 | **Tipo de Pila**           | **Caracteristicas Clave**                                  | **Uso Comun**                                              |
@@ -106,5 +96,3 @@ Una **pila circular** es una variante de la pila que, al igual que la lista circ
 | **Pila de Prioridad**      | Los elementos tienen una prioridad asociada.               | Planificacion de tareas, algoritmos de busqueda de caminos. |
 | **Pila Multiple**          | Maneja varias pilas independientes dentro de una estructura. | Simulacion de procesos en paralelo, gestion de memoria compartida. |
 | **Pila Circular**          | El ultimo elemento apunta al primero, formando un ciclo.   | Buffers circulares, optimizacion de espacio en estructuras de datos de tamaño fijo. |
-
----
