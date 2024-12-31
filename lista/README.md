@@ -40,6 +40,9 @@ La lista enlazada es util para aplicaciones que requieren operaciones frecuentes
 
 # Tipos de listas
 
+
+
+
 ## Lista Simplemente Enlazada
 
 Una **lista simplemente enlazada** es una estructura de datos donde cada elemento (nodo) contiene un valor y un puntero (o enlace) al siguiente nodo en la lista.
@@ -54,8 +57,6 @@ Una **lista simplemente enlazada** es una estructura de datos donde cada element
 - Implementaciones basicas de listas y colas.
 - Almacenamiento dinamico de elementos cuando no es necesario acceder a ellos rapidamente.
 
----
-
 ## Lista de Prioridad
 
 Una **lista de prioridad** es una estructura de datos similar a una cola, donde los elementos tienen una prioridad asociada. Los elementos con mayor prioridad son atendidos antes que los de menor prioridad.
@@ -69,8 +70,6 @@ Una **lista de prioridad** es una estructura de datos similar a una cola, donde 
 - Algoritmos de planificacion de tareas (como en sistemas operativos).
 - Gestion de eventos en simulaciones o sistemas de redes.
 
----
-
 ## Lista Reversible
 
 Una **lista reversible** es una lista que permite recorrerla tanto de manera normal (del primer al ultimo nodo) como en reversa (del ultimo al primero).
@@ -83,8 +82,6 @@ Una **lista reversible** es una lista que permite recorrerla tanto de manera nor
 ### Uso comun:
 - Representacion de estructuras que necesitan ser recorridas en ambas direcciones, como en la implementacion de undo/redo.
 
----
-
 ## Lista de Punteros
 
 Una **lista de punteros** es una lista donde los elementos son punteros a otros elementos o estructuras, en lugar de almacenar los datos directamente.
@@ -95,8 +92,6 @@ Una **lista de punteros** es una lista donde los elementos son punteros a otros 
   
 ### Uso comun:
 - Listas que contienen estructuras complejas o variables de diferentes tipos.
-
----
 
 ## Lista de Listas
 
@@ -110,8 +105,6 @@ Una **lista de listas** es una lista cuyo cada elemento es otra lista, permitien
 - Representacion de matrices o tablas multidimensionales.
 - Implementacion de estructuras como grafos o tablas de hash.
 
----
-
 ## Lista de Arrays
 
 Una **lista de arrays** es una estructura en la que cada elemento es un array. Esto permite almacenar multiples elementos en un solo nodo.
@@ -124,8 +117,6 @@ Una **lista de arrays** es una estructura en la que cada elemento es un array. E
 - Almacenamiento de datos en bloques fijos.
 - Cuando se necesita un conjunto de datos que crezca de forma dinamica, pero se desea tener el control sobre el tamaño de los bloques.
 
----
-
 ## Lista de Insertado Ordenado
 
 Una **lista de insertado ordenado** es una lista que mantiene sus elementos siempre ordenados. Cuando se inserta un nuevo elemento, la lista se reorganiza para mantener el orden.
@@ -136,8 +127,6 @@ Una **lista de insertado ordenado** es una lista que mantiene sus elementos siem
 
 ### Uso comun:
 - Aplicaciones que requieren una lista ordenada en todo momento, como listas de elementos clasificados por prioridad o fecha.
-
----
 
 ## Lista Doblemente Enlazada
 
@@ -151,8 +140,6 @@ Una **lista doblemente enlazada** es una lista en la que cada nodo contiene dos 
 - Implementacion de estructuras de datos mas complejas, como pilas o colas dobles.
 - Navegacion en aplicaciones donde se requiere la posibilidad de movernos hacia adelante y hacia atras, como en navegadores web.
 
----
-
 ## Lista Circular
 
 Una **lista circular** es una lista cuyo ultimo nodo apunta al primer nodo, creando un ciclo continuo de nodos.
@@ -163,8 +150,6 @@ Una **lista circular** es una lista cuyo ultimo nodo apunta al primer nodo, crea
   
 ### Uso comun:
 - Implementacion de estructuras como las colas circulares en sistemas de procesamiento de eventos o tareas.
-  
----
 
 ## Lista Circular Doblemente Enlazada
 
@@ -176,8 +161,6 @@ Una **lista circular doblemente enlazada** es una combinacion de una lista circu
 
 ### Uso comun:
 - Aplicaciones que requieren una navegacion eficiente en ambas direcciones de manera continua, como en la gestion de buffers circulares.
-
----
 
 ## Comparacion de Tipos de Listas
 
