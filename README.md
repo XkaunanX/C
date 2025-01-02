@@ -38,10 +38,55 @@ int main() {
 Si olvidas llamar a `free`, el sistema no liberará esa memoria, lo que puede causar un consumo innecesario de recursos durante la ejecución del programa.
 
 ### 3. Uso de Punteros
+
 C destaca por su potente manejo de punteros, permitiendo:
 - Acceso directo a direcciones de memoria.
-- Manipulacion de estructuras complejas.
-- Creacion y navegacion de estructuras de datos dinamicas como listas enlazadas, arboles y grafos.
+- Manipulación de estructuras complejas.
+- Creación y navegación de estructuras de datos dinámicas como listas enlazadas, árboles y grafos.
+
+**Ejemplo:**
+
+El siguiente ejemplo muestra cómo se puede usar punteros para modificar directamente el valor de una variable desde dentro de una función, así como la manipulación de memoria dinámica usando `malloc` y `free` para gestionar dinámicamente un bloque de memoria:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+// Función que modifica el valor de una variable usando punteros
+void modificarValor(int *ptr) {
+    *ptr = 50;  // Modifica el valor al que apunta el puntero
+}
+
+// Función que usa punteros para manejar memoria dinámica
+void manejarMemoriaDinamica() {
+    int *ptr = (int*) malloc(sizeof(int));  // Asignación dinamica de memoria
+
+    if (ptr == NULL) {
+        printf("Error al asignar memoria\n");
+        return;
+    }
+
+    *ptr = 100;  // Asignar un valor a la memoria dinamica
+    printf("Valor almacenado en memoria dinamica: %d\n", *ptr);
+
+    free(ptr);  // Liberar la memoria dinamica
+}
+
+int main() {
+    int a = 10;
+    printf("Valor antes de modificar: %d\n", a);
+
+    // Llamada a la funcion que modifica el valor de la variable
+    modificarValor(&a);
+
+    printf("Valor despues de modificar: %d\n", a);
+
+    // Llamada a la funcion que maneja memoria dinamica
+    manejarMemoriaDinamica();
+
+    return 0;
+}
+```
 
 ### 4. Paradigma Procedimental
 C adopta un paradigma de programacion estructurada o procedimental. Esto implica:
