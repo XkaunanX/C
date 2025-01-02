@@ -1,6 +1,3 @@
-
-markdown
-Copiar código
 # Implementacion de Concurrencia con Procesos Hijos en C
 
 ## Que es un proceso hijo?
