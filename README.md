@@ -5,10 +5,37 @@ El lenguaje C es un lenguaje de programacion de bajo nivel con capacidades de al
 ## Caracteristicas Principales
 
 ### 1. Lenguaje de Bajo Nivel
-C proporciona acceso directo al hardware, permitiendo operaciones a nivel de bits y manipulacion de registros de memoria. Esto lo convierte en una opcion ideal para programacion de sistemas y desarrollo de controladores.
+C proporciona acceso directo al hardware, permitiendo operaciones a nivel de bits y manipulacion de registros de memoria. Esto lo convierte en una opcion ideal para programacion de sistemas y desarrollo de controladores. 
+
+**Ejemplo:**  
+En C, puedes manipular directamente los valores de memoria usando punteros, lo que te da un control preciso sobre la memoria del sistema. Un ejemplo simple es el uso de punteros para acceder y modificar el contenido de una variable de memoria específica:
+
+```c
+int x = 10;
+int *ptr = &x;
+*ptr = 20;  // Cambia el valor de 'x' a 20
+```
+Este tipo de manipulacion de memoria es caracteristico de un lenguaje de bajo nivel, ya que permite al programador trabajar directamente con direcciones de memoria y registros.
 
 ### 2. Ausencia de Recoleccion de Basura
 A diferencia de muchos lenguajes modernos, C no incluye un recolector de basura. Esto brinda a los desarrolladores control total sobre la asignacion y liberacion de memoria, pero tambien requiere una gestion manual cuidadosa para evitar fugas de memoria y errores.
+
+**Ejemplo:**
+
+En C, cuando se utiliza memoria dinámica con `malloc` o `calloc`, es responsabilidad del programador liberar esa memoria con `free` cuando ya no se necesite. Si no se libera, la memoria seguirá reservada y generará una fuga de memoria.
+
+```c
+#include <stdlib.h>
+
+int main() {
+    int *ptr = (int*) malloc(sizeof(int));  // Asignacion de memoria dinamica
+    *ptr = 10;  // Uso de la memoria asignada
+    
+    free(ptr);  // Liberar la memoria al final
+    return 0;
+}
+```
+Si olvidas llamar a `free`, el sistema no liberará esa memoria, lo que puede causar un consumo innecesario de recursos durante la ejecución del programa.
 
 ### 3. Uso de Punteros
 C destaca por su potente manejo de punteros, permitiendo:
@@ -21,24 +48,74 @@ C adopta un paradigma de programacion estructurada o procedimental. Esto implica
 - Uso de funciones para dividir el codigo en modulos.
 - Fomenta la reutilizacion y la legibilidad.
 
+**Ejemplo:**
+
+```c
+#include <stdio.h>
+
+void saludo() {
+    printf("Hola, mundo!\n");
+}
+
+int main() {
+    saludo();  // Llamada a la funcion saludo
+    return 0;
+}
+```
+
 ### 5. Portabilidad
 El codigo en C puede compilarse en una amplia variedad de plataformas con cambios minimos o nulos. Esto lo convierte en una opcion comun para el desarrollo multiplataforma.
 
 ### 6. Bibliotecas Estandar
 C cuenta con una rica biblioteca estandar que incluye:
-- Manejo de entrada/salida.
-- Manipulacion de cadenas y memoria.
-- Operaciones matematicas y funciones de utilidad.
-Estas bibliotecas proporcionan bloques fundamentales para el desarrollo de aplicaciones.
 
-### 7. Tipado Estatico
-C es un lenguaje con tipado estatico, lo que significa que los tipos de las variables deben ser definidos en tiempo de compilacion y no pueden cambiar durante la ejecucion. Esto permite una mayor eficiencia en la compilacion y ejecucion, pero requiere que los desarrolladores definan claramente las variables y sus tipos.
+- `<stdio.h>`: Manejo de entrada/salida.
+- `<stdlib.h>`: Manejo de memoria dinamica y utilidades varias (como `malloc`, `free`, `calloc`, `realloc`).
+- `<math.h>`: Funciones matematicas (como `sin`, `cos`, `sqrt`).
+- `<string.h>`: Manipulacion de cadenas de caracteres (como `strcpy`, `strlen`, `strcat`).
+
+### 7. Tipado Estático
+C es un lenguaje con tipado estático, lo que significa que los tipos de las variables deben ser definidos en tiempo de compilación y no pueden cambiar durante la ejecución. Esto permite una mayor eficiencia en la compilación y ejecución, pero requiere que los desarrolladores definan claramente las variables y sus tipos.
+
+**Ejemplo:**
+
+```c
+#include <stdio.h>
+
+int main() {
+    int numero = 10;  // Tipo definido como entero
+    numero = "Texto"; // Error: no se puede asignar un string a una variable de tipo entero
+    printf("%d\n", numero);
+    return 0;
+}
+```
 
 ### 8. Compilado
-C es un lenguaje compilado, lo que significa que el codigo fuente es transformado en codigo de maquina antes de ser ejecutado. Este proceso se realiza mediante un compilador que traduce el codigo a un archivo ejecutable.
+C es un lenguaje compilado, lo que significa que el código fuente es transformado en código de máquina antes de ser ejecutado. Este proceso se realiza mediante un compilador que traduce el código a un archivo ejecutable.
+
+El compilador más comúnmente utilizado para C es **gcc** (GNU Compiler Collection). A través de este compilador, el código fuente se puede convertir en un archivo ejecutable que puede ser ejecutado directamente en el sistema operativo.
+
+**Ejemplo de comando en Bash para compilar un archivo `test.c`:**
+
+```bash
+gcc test.c -o test
+```
 
 ### 9. Sintaxis y Declaracion de Funciones
-En C, las funciones son declaradas especificando su tipo de retorno y los parametros. La sintaxis es sencilla pero rigurosa. Las funciones deben ser declaradas antes de ser utilizadas o bien definidas en archivos de cabecera (`.h`).
+En C, las funciones son declaradas especificando su tipo de retorno y los parámetros. La sintaxis es sencilla pero rigurosa. Las funciones deben ser declaradas antes de ser utilizadas o bien definidas en archivos de cabecera (`.h`).
+
+Una declaración de función en C típicamente tiene la siguiente forma:
+
+```c
+tipo_de_retorno nombre_de_funcion(tipo_de_parametro parametro1, tipo_de_parametro parametro2);
+```
+Ejemplo:
+
+```c
+int suma(int a, int b) {
+    return a + b;
+}
+```
 
 ### 10. Palabras Claves
 Algunas de las principales palabras clave en C son:
