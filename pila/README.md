@@ -1,98 +1,64 @@
-# Pila
+## ¿Qué es una pila?
 
-Una **pila** es una estructura de datos que sigue el principio **LIFO** (Last In, First Out), lo que significa que el ultimo elemento en ser agregado es el primero en ser eliminado. Este comportamiento es similar a una pila de platos: el ultimo plato colocado en la cima es el primero en ser retirado.
+Una **pila** es una estructura de datos que sigue el principio **LIFO (Last In, First Out)**, lo que significa que el último elemento en ser insertado es el primero en ser retirado. Esta característica hace que la pila sea útil en situaciones donde el orden de procesamiento debe ser inverso al de llegada.
 
-## Punteros en la Pila
+## ¿Qué cosa modela de la vida real?
 
-La pila se implementa usando **punteros** en C. El puntero **`tope`** (o **`cabeza`**) apunta al **ultimo nodo** de la pila. Este nodo contiene los datos y un puntero al siguiente nodo de la pila. El puntero al siguiente nodo permite que cada nodo "apunte" al siguiente, formando una cadena.
+En la vida real, una pila puede modelar situaciones donde los elementos deben ser procesados en orden inverso al que llegaron. Algunos ejemplos incluyen:
 
-Cuando se realiza una operacion de **push**, se crea un nuevo nodo que apunta al nodo que estaba previamente en el tope. De esta manera, el nuevo nodo se convierte en el nuevo **tope** de la pila. Al realizar una operacion de **pop**, simplemente se mueve el puntero **`tope`** al siguiente nodo, eliminando el nodo superior de la pila.
+- **Pilas de platos**: El último plato colocado es el primero en ser retirado.
+- **Pilas de documentos**: El último documento agregado a una pila es el primero que debe ser procesado.
+- **Deshacer en editores de texto**: Las acciones más recientes son las primeras en deshacerse.
+- **Recursión**: El sistema de llamadas de una función maneja las funciones en una pila, de modo que las últimas llamadas realizadas son las primeras en finalizar.
 
-## Logica en la vida real
+## ¿Qué se necesita para implementar la pila?
 
-Piensa en una pila de libros. Cuando pones un nuevo libro en la cima, lo colocas sobre el anterior, y cuando necesitas un libro, tomas el que esta en la cima. En una pila de computacion, el ultimo libro (dato) agregado sera el primero en ser retirado.
+Para implementar una pila, se necesitan las siguientes estructuras y punteros:
 
-## Resumen
+1. **Estructura de los nodos**:
+   Cada nodo de la pila contiene un conjunto de datos que deseamos almacenar. Los nodos también deben tener un puntero al siguiente nodo, formando una lista enlazada. Esto permite la manipulación dinámica de la pila, agregando y eliminando elementos desde la parte superior.
 
-- **Pila**: Estructura LIFO.
-- **Puntero tope**: Apunta al ultimo nodo insertado.
-- **Operaciones**: Push (insertar), Pop (eliminar), Peek (consultar).
-- **Punteros**: Permiten una gestion eficiente de la memoria y las operaciones.
+2. **Estructura de la pila**:
+   La pila en sí misma se representa mediante una estructura que tiene un puntero único (`tope`) que apunta al nodo superior. El `tope` facilita la inserción y eliminación de elementos sin necesidad de recorrer toda la estructura. Además, la pila puede mantener un contador que lleva el seguimiento de la cantidad de elementos que contiene.
 
-La pila es util en situaciones donde necesitamos procesar los elementos en orden inverso al que fueron agregados, como en el manejo de funciones recursivas o la reversion de acciones en programas.
+3. **Puntero cabeza**:
+   La pila se gestiona mediante un único puntero cabeza (`tope`). Este puntero siempre apunta al nodo superior de la pila, lo que permite realizar las operaciones de inserción (push) y eliminación (pop) de manera eficiente.
 
-# Tipos de pilas
+## Operaciones típicas de una pila
 
-## Pila LIFO (Last In, First Out)
+Las operaciones más comunes realizadas sobre una pila incluyen:
 
-La **pila LIFO** es la forma basica de pila y sigue estrictamente el principio **Last In, First Out**, donde el ultimo elemento insertado es el primero en ser eliminado.
+1. **Push**: Insertar un nuevo elemento en la pila, colocándolo en la parte superior.
+2. **Pop**: Eliminar el elemento superior de la pila. El siguiente elemento se convierte en el nuevo elemento superior.
+3. **Peek**: Consultar el elemento superior sin eliminarlo, obteniendo el valor sin modificar la pila.
+4. **Longitud**: Obtener el número de elementos almacenados en la pila.
+5. **Vacia**: Verificar si la pila está vacía, lo cual es importante para evitar operaciones inválidas como pop o peek cuando no hay elementos.
 
-### Caracteristicas:
-- **Orden**: El acceso y la eliminacion de los elementos solo se puede realizar desde el **tope** de la pila.
-- **Operaciones principales**: `push` (insertar), `pop` (eliminar), `peek` (ver el tope).
-- **Uso comun**: Algoritmos de retroceso, como el recorrido en profundidad de grafos y el analisis de expresiones matematicas.
+## Tipos de pilas
 
-### Ventajas:
-- **Simplicidad**: Es facil de implementar y muy eficiente para problemas que requieren un acceso LIFO.
+Existen varios tipos de pilas que se pueden adaptar a diferentes necesidades y aplicaciones:
 
-## Pila Reversible
+1. **Pila LIFO (Last In, First Out)**:
+   Es la forma más común de pila, donde el último elemento insertado es el primero en ser retirado. Es ampliamente utilizada en algoritmos y estructuras que requieren acceso inverso a los elementos.
 
-Una **pila reversible** es una pila que permite invertir el orden de los elementos, es decir, puedes recorrerla desde el ultimo elemento hasta el primero o viceversa.
+2. **Pila Circular**:
+   En una pila circular, cuando se alcanza el final de la estructura, el espacio libre se reutiliza en la parte inicial, creando un ciclo. Esto es útil para optimizar el uso del espacio en sistemas con recursos limitados.
 
-### Caracteristicas:
-- **Acceso bidireccional**: Permite recorrer los elementos desde el ultimo hasta el primero (como una pila normal) o desde el primero hasta el ultimo (de manera inversa).
-- **Operaciones adicionales**: Algunas implementaciones pueden ofrecer una operacion para revertir la pila.
-- **Implementacion**: Puede requerir el uso de una lista doblemente enlazada o una estructura auxiliar para realizar la inversion.
+3. **Pila Múltiple**:
+   Este tipo de pila maneja varias pilas independientes dentro de una misma estructura. Es útil cuando se necesita gestionar diferentes conjuntos de datos de forma aislada pero bajo un mismo sistema.
 
-### Uso comun:
-- Procesamiento de datos que necesitan ser recorridos en ambas direcciones.
-- Implementacion de algoritmos que requieren tanto un acceso secuencial como reverso a los elementos.
+4. **Pila de Prioridad**:
+   Aunque no sigue estrictamente el principio LIFO, las pilas de prioridad gestionan los elementos según su prioridad en lugar del orden de llegada. Esto es útil cuando los elementos deben ser procesados con un orden de prioridad específico.
 
-## Pila de Prioridad
+5. **Pila Reversible**:
+   Una pila reversible permite invertir el orden de los elementos de manera eficiente, permitiendo acceder a los elementos en orden inverso de inserción sin alterar la estructura fundamental.
 
-Una **pila de prioridad** es una variacion de la pila estandar en la que cada elemento tiene una prioridad asociada. Los elementos con mayor prioridad son atendidos antes que los de menor prioridad, sin seguir el principio LIFO tradicional.
+## Comparación entre los tipos de pilas
 
-### Caracteristicas:
-- **Prioridad**: Cada elemento tiene una prioridad, y el elemento con la mayor prioridad es el primero en ser extraido.
-- **Operaciones principales**: `insertar` (insertar con prioridad), `extraer` (extraer el elemento con mayor prioridad).
-- **Implementacion**: Se puede implementar usando una estructura de datos como un heap o una lista ordenada.
-
-### Uso comun:
-- Sistemas que requieren la ejecucion de tareas segun su urgencia (como en la planificacion de procesos de un sistema operativo).
-- Algoritmos como Dijkstra para encontrar el camino mas corto en un grafo.
-
-## Pila Multiple
-
-Una **pila multiple** es una estructura que permite tener varias pilas independientes en una sola estructura de datos.
-
-### Caracteristicas:
-- **Varias pilas**: Permite manejar multiples pilas dentro de una sola estructura, generalmente con un indice o identificador para cada pila.
-- **Operaciones**: Las pilas pueden ser manejadas de manera independiente, pero todas pertenecen a la misma estructura.
-- **Implementacion**: Puede implementarse mediante una estructura de array de pilas o una lista enlazada con punteros adicionales.
-
-### Uso comun:
-- Gestion de multiples tareas en paralelo o simulacion de multiples pilas en un sistema de procesamiento.
-- Aplicaciones que requieren multiples pilas de manera eficiente, como en la simulacion de memoria compartida.
-
-## Pila Circular
-
-Una **pila circular** es una variante de la pila que, al igual que la lista circular, hace que el ultimo elemento este conectado al primero, creando un ciclo. Esto permite reutilizar espacio cuando la pila alcanza su limite de capacidad.
-
-### Caracteristicas:
-- **Ciclo**: El ultimo elemento de la pila apunta de nuevo al primero, lo que hace que no haya desperdicio de espacio cuando la pila esta llena.
-- **Implementacion**: Usualmente se implementa mediante un arreglo que contiene punteros al primer y ultimo elemento de la pila.
-- **Ventaja**: Evita el desbordamiento de la pila al aprovechar el espacio no utilizado despues de eliminar elementos.
-
-### Uso comun:
-- Implementacion de buffers circulares, donde los datos se reciclan continuamente.
-- Aplicaciones donde se debe asegurar el uso eficiente del espacio, como en estructuras de datos de tipo "stack" con tamaño fijo.
-
-## Comparacion de Tipos de Pilas
-
-| **Tipo de Pila**           | **Caracteristicas Clave**                                  | **Uso Comun**                                              |
-|----------------------------|------------------------------------------------------------|------------------------------------------------------------|
-| **Pila LIFO**              | Sigue el principio Last In, First Out (LIFO).              | Algoritmos de retroceso, como recorrido de grafos y parsing de expresiones. |
-| **Pila Reversible**        | Permite recorrer los elementos en ambas direcciones.       | Procesamiento de datos que requieren recorridos bidireccionales. |
-| **Pila de Prioridad**      | Los elementos tienen una prioridad asociada.               | Planificacion de tareas, algoritmos de busqueda de caminos. |
-| **Pila Multiple**          | Maneja varias pilas independientes dentro de una estructura. | Simulacion de procesos en paralelo, gestion de memoria compartida. |
-| **Pila Circular**          | El ultimo elemento apunta al primero, formando un ciclo.   | Buffers circulares, optimizacion de espacio en estructuras de datos de tamaño fijo. |
+| Tipo de Pila         | Propósito                                                         | Orden de Procesamiento             | Reutilización de Espacio | Prioridad en el Procesamiento | Ejemplos de Uso                     |
+|----------------------|-------------------------------------------------------------------|------------------------------------|--------------------------|------------------------------|--------------------------------------|
+| **Pila LIFO**         | Proceso de elementos en el orden inverso de inserción             | Último en entrar, primero en salir | No                       | No                           | Deshacer en editores, recursión     |
+| **Pila Circular**     | Optimización de espacio reutilizando memoria                      | Último en entrar, primero en salir | Sí                       | No                           | Buffers, sistemas con memoria limitada|
+| **Pila Múltiple**     | Gestión de varias pilas independientes dentro de una estructura  | Depende de la pila individual      | No                       | No                           | Manejo de diferentes tipos de datos  |
+| **Pila de Prioridad** | Gestionar elementos con prioridad (no necesariamente LIFO)       | Según la prioridad de los elementos| No                       | Sí                           | Planificación de tareas, colas de prioridad |
+| **Pila Reversible**   | Acceso eficiente a elementos en orden inverso                     | Depende de la operación de inversión| No                       | No                           | Inversión de datos, almacenamiento temporal |
