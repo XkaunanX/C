@@ -1,90 +1,70 @@
-# Manejo de Archivos en C
+## Archivos
 
-En C, el manejo de archivos se realiza a traves de funciones de la biblioteca estandar de C, que permiten leer, escribir, modificar y gestionar archivos de manera eficiente. El manejo de archivos es fundamental en la programacion de sistemas, bases de datos y otros programas que necesitan almacenar y recuperar datos persistentes.
+Un archivo es un conjunto identificable de bits almacenados en un sistema de almacenamiento, como un disco duro o una unidad SSD. Los archivos se utilizan para almacenar datos de manera persistente y pueden contener diversos tipos de informacion, como texto, imagenes o datos binarios.
 
-## Tipos de Acceso a Archivos
+## ¿Que son los metadatos?
 
-Existen diferentes formas de acceso a archivos, cada una adecuada a distintos escenarios y necesidades. A continuacion, se describen los tipos mas comunes:
+Los metadatos son datos que describen o proporcionan informacion sobre otros datos. En el contexto de los archivos, los metadatos incluyen detalles como:
 
-### 1. Acceso Secuencial
+- **Owner**: El propietario del archivo.
+- **Group**: El grupo asociado con el archivo.
+- **Executable**: Un indicador de si el archivo es ejecutable.
+- **Tipo de archivo**: Determina si el archivo es de texto, binario, registro, etc.
+- **Permisos**: Controla quien puede leer, escribir o ejecutar el archivo.
 
-El **acceso secuencial** implica leer o escribir en el archivo de manera continua, uno tras otro, en el mismo orden en que los datos estan almacenados. Este tipo de acceso es adecuado cuando los datos se leen o se escriben de forma lineal, es decir, desde el principio del archivo hasta el final, sin saltarse registros.
+El tipo de archivo es parte de los metadatos, indicando si el archivo contiene datos binarios, texto u otros tipos especificos.
 
-**Caracteristicas:**
-- Se realiza en orden consecutivo.
-- Adecuado para pequeños archivos o cuando no se requiere acceso rapido a registros especificos.
-- Relativamente facil de implementar y usar.
+## Tipos de archivos que maneja el SO
 
-**Operaciones comunes:**
-- `fread()`, `fwrite()`, `fgetc()`, `fputc()`, `fgets()`, `fputs()`.
+El sistema operativo maneja varios tipos de archivos:
 
-### 2. Acceso Indexado
+- **Archivos binarios**: Contienen datos en formato binario, como ejecutables o bibliotecas compartidas.
+- **Archivos de texto**: Contienen datos en formato legible por humanos, con delimitadores de linea que separan las lineas de texto.
+- **Archivos de registro**: Utilizados para almacenar registros.
 
-El **acceso indexado** implica el uso de un indice que permite localizar rapidamente los registros dentro del archivo. El indice es un conjunto de punteros o claves que indican la ubicacion de los registros en el archivo, permitiendo acceder directamente a los datos sin necesidad de recorrer todo el archivo secuencialmente.
+Los archivos de registro no deben confundirse con los archivos de logs, ya que los primeros se utilizan para almacenar registros estructurados, mientras que los logs contienen informacion de eventos o errores.
 
-**Caracteristicas:**
-- Utiliza un indice que mapea las claves de los registros a las posiciones en el archivo.
-- Ofrece una mayor velocidad de acceso en archivos grandes.
-- Requiere espacio adicional para almacenar el indice.
+## Estructura de Archivos
 
-**Operaciones comunes:**
-- Busquedas rapidas usando claves.
-- Modificacion o eliminacion de registros especificos sin leer todo el archivo.
+Los archivos pueden tener dos partes principales:
 
-### 3. Acceso Hash
+1. **Cabecera**: Contiene metadatos y, a veces, informacion adicional que describe la estructura del archivo.
+2. **Cuerpo**: Contiene los datos reales o la informacion que el archivo esta destinado a almacenar.
 
-El **acceso hash** utiliza una funcion hash para convertir una clave de busqueda en una direccion de ubicacion en el archivo. Este tipo de acceso es muy eficiente para busquedas rapidas, ya que la funcion hash permite obtener una ubicacion directa para acceder a los registros.
+## System Calls para Manejo de Archivos
 
-**Caracteristicas:**
-- Utiliza una funcion hash para mapear claves a ubicaciones.
-- Muy eficiente para busquedas de registros, especialmente en tablas grandes.
-- La funcion hash debe estar diseñada para evitar colisiones (cuando diferentes claves generan la misma ubicacion).
+Las system calls en Unix proporcionan las funciones basicas para interactuar con archivos. Algunas de las mas utilizadas son:
 
-**Operaciones comunes:**
-- `fseek()`, `fread()`, `fwrite()` con calculos de la ubicacion mediante la funcion hash.
+- **open()**: Abre un archivo para lectura, escritura o ambas.
+- **read()**: Lee datos de un archivo abierto.
+- **write()**: Escribe datos en un archivo abierto.
+- **close()**: Cierra un archivo previamente abierto.
+- **lseek()**: Mueve el puntero de lectura/escritura de un archivo a una posicion especifica.
 
-### 4. Acceso Directo
+## Tipos de Accesos
 
-El **acceso directo** permite leer o escribir en cualquier parte del archivo de forma directa, sin necesidad de recorrer los registros de manera secuencial. El acceso directo usa posiciones absolutas o relativas para llegar a la ubicacion deseada dentro del archivo.
+Los accesos a archivos pueden realizarse de diferentes maneras, dependiendo de como se gestionen los datos en el archivo:
 
-**Caracteristicas:**
-- Permite saltar a cualquier parte del archivo rapidamente.
-- Adecuado para archivos grandes donde se necesita acceso frecuente a posiciones especificas.
-- Se utiliza en archivos binarios o bases de datos.
+- **Secuencial**: Los datos se leen o escriben de manera continua, sin saltar a posiciones especificas.
+- **Indexado**: Utiliza un indice para acceder a los datos de manera mas eficiente.
+- **Hash**: Utiliza una funcion hash para acceder a datos.
+- **Directo**: Permite acceso aleatorio a los datos sin seguir un orden especifico.
+- **Aleatorio**: Similar al acceso directo, pero con la capacidad de leer o escribir en cualquier posicion del archivo.
+- 
+## Operaciones Comunes
 
-**Operaciones comunes:**
-- `fseek()`, `ftell()`, `fread()`, `fwrite()`.
+1. **Abrir un Archivo (open)**: Solicita acceso a un archivo para leer o escribir.
 
-### 5. Acceso Bipartito
+2. **Leer Datos (read)**: Extrae datos de un archivo y los coloca en un buffer en memoria.
 
-El **acceso bipartito** es un tipo de acceso que divide el archivo en dos secciones: una para los datos y otra para los indices. Este tipo de acceso permite mejorar la organizacion de la informacion y facilita la busqueda de registros especificos sin necesidad de recorrer todo el archivo.
+3. **Escribir Datos (write)**: Almacena datos en un archivo.
 
-**Caracteristicas:**
-- El archivo se divide en dos partes: una para los datos y otra para los indices.
-- Adecuado para bases de datos que requieren acceso eficiente a registros sin tener que leer todos los datos.
-- La gestion de indices puede hacerse con un sistema de busqueda o arbol.
+4. **Cerrar un Archivo (close)**: Libera recursos y asegura que los datos se escriban correctamente.
 
-### 6. Acceso Aleatorio
+5. **Mover el Puntero (lseek)**: Ajusta la posición de lectura o escritura en un archivo.
 
-El **acceso aleatorio** permite acceder a cualquier parte del archivo en cualquier momento sin la necesidad de leer secuencialmente los registros. Este tipo de acceso es util cuando se desea manipular grandes volumenes de datos sin necesidad de recorrer toda la estructura de almacenamiento.
+6. **Eliminar un Archivo (remove)**: Borra un archivo y libera el espacio ocupado.
 
-**Caracteristicas:**
-- Permite acceder a cualquier parte del archivo sin seguir un orden secuencial.
-- Usualmente, se realiza mediante punteros o indices que determinan las ubicaciones en el archivo.
-- Muy eficiente para operaciones en archivos grandes o complejos.
+7. **Renombrar un Archivo (rename)**: Cambia el nombre o mueve un archivo.
 
-**Operaciones comunes:**
-- `fseek()`, `ftell()`, `fread()`, `fwrite()`.
-
-## Funciones Comunes para Manejo de Archivos
-
-En C, el manejo de archivos se realiza principalmente a traves de las siguientes funciones:
-
-- `fopen()`: Abre un archivo en un modo especifico (lectura, escritura, etc.).
-- `fclose()`: Cierra un archivo.
-- `fread()`: Lee datos de un archivo.
-- `fwrite()`: Escribe datos en un archivo.
-- `fseek()`: Mueve el puntero de lectura/escritura a una posicion especifica en el archivo.
-- `ftell()`: Obtiene la posicion actual del puntero de lectura/escritura.
-- `fprintf()`: Escribe una cadena de texto en un archivo.
-- `fscanf()`: Lee una cadena de texto desde un archivo.
+8. **Comprobar la Existencia de un Archivo (stat)**: Verifica si un archivo existe y obtiene detalles sobre él.
