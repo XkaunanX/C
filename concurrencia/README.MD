@@ -1,76 +1,74 @@
-# Creacion de Procesos Hijos
+# Implementación de Concurrencia con Procesos Hijos en C
 
-La creacion de procesos hijos es una tecnica fundamental en sistemas operativos que permite a un proceso (llamado proceso padre) generar nuevos procesos (llamados procesos hijos). Esta tecnica es clave para la ejecucion de multiples tareas simultaneas o distribuidas, y es utilizada para mejorar la eficiencia y la escalabilidad de los programas.
+## ¿Qué es un proceso hijo?
 
-## ¿Que es la Creacion de Procesos Hijos?
+En sistemas operativos, un **proceso hijo** es un proceso que es creado por otro proceso, conocido como el **proceso padre**. Un proceso hijo hereda ciertos atributos del proceso padre, pero puede ejecutar tareas de forma independiente. Los procesos hijos son útiles para realizar tareas concurrentes, permitiendo que un programa ejecute múltiples tareas simultáneamente.
 
-Cuando un proceso necesita realizar varias tareas al mismo tiempo o delegar tareas especificas a otros procesos, puede crear uno o mas procesos hijos. Cada proceso hijo ejecutara una tarea diferente, y pueden trabajar en paralelo con el proceso padre o entre si.
+## ¿Qué es un PID?
 
-### Comportamiento de los Procesos Hijos
+El **PID** (Process Identifier) es un número único asignado por el sistema operativo a cada proceso que se ejecuta en el sistema. Cada proceso en ejecución tiene un PID que lo identifica de manera única. El proceso padre y sus procesos hijos tienen PIDs diferentes. El proceso hijo puede conocer el PID de su proceso padre, pero el padre no necesariamente sabe el PID de su hijo de manera inmediata.
 
-- **Independencia**: Los procesos hijos, aunque creados por el proceso padre, pueden ejecutarse de forma independiente. Sin embargo, pueden comunicarse con el proceso padre y entre si si es necesario.
-- **Identificacion**: Cada proceso en un sistema operativo tiene un identificador unico llamado PID (Process ID). Los procesos hijos tienen su propio PID, y el proceso padre puede obtener este valor para gestionarlos o esperar su finalizacion.
-- **Finalizacion**: Los procesos hijos pueden finalizar en cualquier momento, y dependiendo de su implementacion, pueden enviar informacion de vuelta al proceso padre o al sistema operativo.
+## Comportamiento de los procesos hijos
 
-## ¿Por que crear Procesos Hijos?
+El comportamiento de los procesos hijos depende de la programación y el sistema operativo. En general:
 
-Los procesos hijos son utiles en situaciones donde se necesitan realizar multiples operaciones de forma concurrente o paralela. Al crear procesos hijos, se puede distribuir la carga de trabajo entre diferentes unidades de ejecucion, lo que puede mejorar el rendimiento general de un programa.
+- **Proceso padre**: Al invocar una llamada como `fork()`, el proceso padre crea un proceso hijo. Después de la creación, el proceso padre puede esperar la finalización del hijo, o seguir ejecutando otras tareas de forma concurrente.
+- **Proceso hijo**: El proceso hijo empieza a ejecutarse en paralelo al proceso padre, generalmente ejecutando una tarea diferente de la que ejecutaba el padre.
 
-## Comunicacion entre Padre e Hijo
+Ambos procesos, el padre y el hijo, continúan ejecutándose independientemente, permitiendo la ejecución de múltiples tareas en paralelo.
 
-En muchos casos, el proceso padre y los procesos hijos necesitan intercambiar informacion. Esto se puede hacer utilizando mecanismos como **pipes**, **señales** o **memoria compartida**, dependiendo del sistema operativo y los requisitos de la aplicacion.
+## Comunicación entre procesos hijos y padre
 
-## Consideraciones al Crear Procesos Hijos
+La comunicación entre un proceso padre y sus procesos hijos se puede realizar de varias maneras. Algunas de las técnicas más comunes incluyen:
 
-- **Consumo de recursos**: La creacion de procesos hijos puede consumir recursos del sistema, como memoria y capacidad de procesamiento. Es importante no crear mas procesos de los que el sistema puede manejar eficientemente.
-- **Sincronizacion**: Cuando multiples procesos hijos estan trabajando en tareas relacionadas, puede ser necesario sincronizarlos para evitar condiciones de carrera o accesos simultaneos a recursos compartidos.
-- **Manejo de errores**: Es crucial manejar adecuadamente los errores en la creacion y ejecucion de los procesos hijos, para evitar que el sistema quede en un estado inconsistente.
+1. **Pipes (tuberías)**: Son mecanismos de comunicación que permiten que un proceso escriba datos en una tubería y otro proceso los lea desde la misma tubería.
+2. **Memoria compartida**: Permite que los procesos compartan una región de memoria común, donde pueden leer y escribir datos de manera eficiente.
+3. **Sockets**: Los sockets permiten la comunicación entre procesos, tanto dentro de la misma máquina como entre diferentes máquinas a través de una red.
+4. **Señales**: Los procesos pueden enviarse señales entre sí para notificar eventos o iniciar acciones específicas, como la interrupción de la ejecución de un proceso.
 
-# Creacion de Procesos Hijos y la PCB en C
+## ¿Qué pasa con la PCB cuando se crea un proceso hijo y qué es la PCB?
 
-Cuando un proceso crea un proceso hijo en C, utilizando la funcion `fork()`, el proceso hijo hereda varios atributos del proceso padre. Uno de los elementos mas importantes que se copia es la **PCB** (Process Control Block, Bloque de Control del Proceso).
+La **PCB** (Process Control Block) es una estructura de datos utilizada por el sistema operativo para almacenar información crítica sobre un proceso. Cada proceso tiene una PCB que contiene:
 
-## ¿Que es la PCB?
+- PID del proceso.
+- Estado del proceso (ejecutando, esperando, detenido).
+- Contadores de programa y registros.
+- Información sobre la memoria utilizada.
+- Punteros a estructuras de datos necesarias para la gestión del proceso.
 
-La **PCB** es una estructura de datos que el sistema operativo utiliza para almacenar toda la informacion relacionada con un proceso en ejecucion. Esta informacion incluye:
+Cuando se crea un proceso hijo utilizando una llamada como `fork()`, el sistema operativo realiza una copia de la PCB del proceso padre, creando una nueva PCB para el proceso hijo. El proceso hijo hereda muchos atributos del proceso padre, pero ambos procesos tienen su propia PCB y contexto de ejecución.
 
-- **PID (Identificador de Proceso)**: Un identificador unico asignado a cada proceso.
-- **Estado del Proceso**: Indica si el proceso esta ejecutandose, esperando, detenido, etc.
-- **Registros de CPU**: Los valores de los registros del procesador cuando el proceso fue suspendido.
-- **Punteros a la Memoria**: Direcciones de memoria relacionadas con el proceso, como el espacio de direcciones virtuales.
-- **Informacion de Entrada/Salida**: Detalles sobre archivos abiertos o dispositivos que el proceso esta utilizando.
-- **Prioridad**: Define la prioridad del proceso en el sistema operativo.
+## ¿Qué es la system call `fork()`?
 
-## Copia de la PCB en el `fork()`
+La **system call `fork()`** es una llamada al sistema que se utiliza para crear un nuevo proceso hijo. Cuando un proceso invoca `fork()`, se crea un proceso hijo que comienza a ejecutarse en paralelo con el proceso padre.
 
-Cuando se llama a `fork()` en C, el sistema operativo crea un nuevo proceso (hijo) que es una copia del proceso original (padre). El proceso hijo hereda una copia de la **PCB** del proceso padre, lo que incluye la mayor parte del estado del proceso, pero con algunas diferencias claves:
+### Comportamiento de `fork()`:
 
-### Atributos Copiados
+- **En el proceso padre**: La llamada a `fork()` devuelve el PID del proceso hijo.
+- **En el proceso hijo**: La llamada a `fork()` devuelve `0`.
 
-1. **Registros de CPU**: El hijo obtiene una copia de los registros de CPU del padre, aunque el proceso hijo comenzara a ejecutarse desde el punto en el que `fork()` fue llamado, lo que significa que tiene su propia ejecucion a partir de ese momento.
-  
-2. **Espacio de Memoria**: El espacio de memoria del hijo es inicialmente una copia del del padre. Sin embargo, debido a optimizaciones como "copy-on-write", si alguno de los procesos (padre o hijo) modifica una parte de la memoria, esa parte se copia realmente y cada uno tendra su propio espacio de memoria para esa parte.
+Ambos procesos continúan ejecutándose después de la llamada a `fork()`, pero con sus propios contextos y ejecuciones concurrentes.
 
-3. **Archivos Abiertos**: El proceso hijo hereda los descriptores de archivo abiertos por el padre, lo que significa que ambos procesos comparten los mismos descriptores de archivo, pero con sus propios punteros de archivo (la posicion en el archivo no se comparte).
+## Planificación de los procesos por parte del sistema operativo
 
-4. **Variables de Entorno y Argumentos**: El proceso hijo tambien copia las variables de entorno y los argumentos pasados al programa, aunque este puede modificarlos independientemente del padre.
+El **sistema operativo** se encarga de gestionar la ejecución de los procesos, incluidas las tareas de planificación y asignación de tiempo de CPU a cada proceso. La **planificación de procesos** es el mecanismo utilizado por el sistema operativo para determinar qué procesos deben ejecutarse y en qué orden.
 
-### Diferencias Entre el Padre y el Hijo
+- **Planificación preemptiva**: En sistemas multitarea, el sistema operativo puede interrumpir un proceso en ejecución para darle tiempo de CPU a otro proceso. Esto asegura que todos los procesos, incluidos los procesos hijos, reciban atención.
+- **Planificación no preemptiva**: En sistemas no preemptivos, un proceso debe liberar el control de la CPU antes de que otro proceso pueda ejecutarse. En este caso, los procesos pueden ejecutarse por un tiempo indefinido hasta que terminen su tarea o sean suspendidos.
 
-Aunque el proceso hijo copia la **PCB** del padre, hay algunas diferencias clave:
+El sistema operativo utiliza diferentes algoritmos de planificación (como Round Robin, Prioridades, FIFO, etc.) para gestionar la ejecución de los procesos de manera eficiente.
 
-- El valor retornado por `fork()` es **0** en el hijo y es el **PID** del proceso hijo en el padre.
-- El **PID** del hijo sera unico, diferente al del padre.
-- Las direcciones de memoria pueden ser iguales al inicio, pero debido a optimizaciones como "copy-on-write", el proceso hijo puede tener su propio espacio de memoria si realiza modificaciones.
+## Comportamiento en sistemas multinúcleo y mononúcleo
 
-### Importancia de la Copia de la PCB
+El comportamiento de los procesos hijos puede variar dependiendo de si el sistema operativo está corriendo en un **procesador multinúcleo** o **mononúcleo**.
 
-La copia de la PCB permite que el proceso hijo continue con el mismo contexto de ejecucion que el proceso padre, facilitando el paralelismo y la multitarea. Sin embargo, debido a que los procesos son independientes, el sistema operativo tambien mantiene mecanismos para sincronizar y gestionar los procesos de manera que se pueda evitar el acceso simultaneo y no controlado a los recursos compartidos.
+### En un sistema **mononúcleo**:
+- **Solo un proceso a la vez** puede ejecutarse en el CPU físico, incluso si hay múltiples procesos hijos. El sistema operativo utiliza un mecanismo de **multitarea** para cambiar entre los procesos, dándole a cada uno una fracción de tiempo en la CPU. 
+- La concurrencia es simulada mediante la rápida conmutación de contexto entre los procesos padre e hijo.
 
-## Conclusion
-
-La creacion de un proceso hijo mediante `fork()` en C es un mecanismo eficiente que permite la creacion de nuevos procesos, donde el proceso hijo hereda una copia casi identica de la **PCB** del proceso padre. Esto garantiza que el proceso hijo pueda ejecutarse con un contexto de ejecucion similar al del padre, mientras que sigue siendo independiente en su propia ejecucion.
-
+### En un sistema **multinúcleo**:
+- El sistema operativo puede asignar diferentes núcleos del procesador a diferentes procesos, lo que permite que los procesos padre e hijo **ejecuten en paralelo** en diferentes núcleos. Esto mejora el rendimiento de las aplicaciones concurrentes.
+- Sin embargo, el sistema operativo sigue gestionando la ejecución de los procesos y asegurando que se respeten las reglas de concurrencia, como el manejo adecuado de los recursos compartidos.
 
 # Libreria: `#include <unistd.h>`
 La libreria `unistd.h` proporciona acceso a funciones y constantes del sistema operativo Unix y sistemas basados en Unix. Algunas de sus funciones mas utilizadas son:
