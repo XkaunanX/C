@@ -1,24 +1,28 @@
-# Tipos Abstractos de Datos (TADs) y su Implementacion en C
+# TAD
 
-## ¿Que es un TAD?
+Un **Tipo Abstracto de Datos (TAD)** es una estructura que define un conjunto de operaciones que pueden realizarse sobre un conjunto de datos sin especificar como estan implementados esos datos. Un TAD describe que operaciones se pueden realizar y cual es el comportamiento de esas operaciones, pero no se enfoca en los detalles de implementacion.
 
-Un **Tipo Abstracto de Datos (TAD)** es una estructura de datos definida por un conjunto de operaciones que se pueden realizar sobre el, pero sin especificar como se implementan esas operaciones internamente. En otras palabras, un TAD describe **que** se puede hacer con un conjunto de datos y **como** se debe interactuar con ellos, pero no se enfoca en como se almacenan o gestionan los datos en memoria.
+## Caracteristicas de los TAD
 
-La principal ventaja de los TADs es que proporcionan **abstraccion**. Los usuarios de un TAD no necesitan preocuparse por los detalles de su implementacion, solo necesitan saber que operaciones estan disponibles y como usarlas.
+1. **Encapsulamiento**: El TAD oculta los detalles de implementacion y solo proporciona una interfaz publica.
+2. **Operaciones Definidas**: Los TAD tienen un conjunto de operaciones bien definidas que se pueden realizar sobre los datos que encapsulan.
+3. **Independencia de Implementacion**: El mismo TAD puede ser implementado de diferentes maneras, y el usuario solo interactua con la interfaz, no con los detalles internos.
 
-### Caracteristicas de los TADs:
-1. **Abstraccion**: Los detalles de implementacion estan ocultos.
-2. **Modularidad**: Permiten organizar el codigo en modulos independientes.
-3. **Independencia de Implementacion**: La implementacion de un TAD se puede cambiar sin afectar al codigo que lo usa, siempre y cuando la interfaz (conjunto de operaciones) se mantenga igual.
+## Implementacion en C
 
-## Implementacion de TADs en C
+En C, los TAD se implementan utilizando archivos `.h` y `.c`.
 
-En el lenguaje de programacion C, los TADs no estan definidos como una caracteristica del lenguaje, pero se pueden implementar facilmente utilizando **estructuras (`struct`)** y **funciones**.
+### Archivos `.h` (Archivos de Cabecera)
 
-Para implementar un TAD en C, se siguen los siguientes pasos:
+Los archivos `.h` son archivos de cabecera que contienen las **declaraciones** de las estructuras de datos y las funciones que operan sobre ellas. Sirven como una interfaz para el usuario de las funciones, permitiendo que otras partes del programa conozcan las operaciones disponibles sin ver los detalles de la implementacion. Estos archivos son incluidos en los archivos `.c` o en cualquier otro archivo que necesite utilizar las funciones definidas.
 
-1. **Definir la estructura de datos**: Se utiliza la palabra clave `struct` para definir el tipo de datos que almacenara el TAD. La estructura de datos debe contener los elementos que representan el TAD.
-   
-2. **Definir las funciones**: Se crean funciones que realizan las operaciones sobre el TAD. Estas funciones operan sobre la estructura de datos definida en el paso anterior.
+### Archivos `.c` (Archivos de Implementacion)
 
-3. **Abstraccion de operaciones**: Las operaciones disponibles para interactuar con el TAD (como agregar, eliminar, acceder a los elementos, etc.) se proporcionan a traves de funciones. El usuario puede usar estas funciones sin conocer la implementacion interna.
+Los archivos `.c` contienen la **implementacion** de las funciones definidas en el archivo de cabecera. Aqui se especifica como se manejan internamente las operaciones sobre las estructuras de datos.
+
+## ¿Como Funcionan los Archivos `.h` y `.c`?
+
+- El archivo `.h` define las interfaces: las estructuras y las funciones que se pueden usar.
+- El archivo `.c` contiene la implementacion de esas funciones.
+- El archivo `.h` es incluido en el archivo `.c` (o en cualquier otro archivo que necesite usar las funciones definidas).
+- El archivo `.h` usa directivas de preprocesador como `#ifndef`, `#define` y `#endif` para evitar la inclusion multiple.
