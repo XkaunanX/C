@@ -88,10 +88,11 @@ int main() {
 }
 ```
 
-### 4. Paradigma Procedimental
+### 4. Paradigma Procedimental e Imperativo
 C adopta un paradigma de programacion estructurada o procedimental. Esto implica:
 - Uso de funciones para dividir el codigo en modulos.
 - Fomenta la reutilizacion y la legibilidad.
+- Es un lenguaje de paradigma imperativo, lo que significa que el programador da instrucciones secuenciales al sistema para que ejecute una serie de operaciones.
 
 **Ejemplo:**
 
