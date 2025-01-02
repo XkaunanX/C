@@ -1,74 +1,77 @@
-# Implementación de Concurrencia con Procesos Hijos en C
 
-## ¿Qué es un proceso hijo?
+markdown
+Copiar código
+# Implementacion de Concurrencia con Procesos Hijos en C
 
-En sistemas operativos, un **proceso hijo** es un proceso que es creado por otro proceso, conocido como el **proceso padre**. Un proceso hijo hereda ciertos atributos del proceso padre, pero puede ejecutar tareas de forma independiente. Los procesos hijos son útiles para realizar tareas concurrentes, permitiendo que un programa ejecute múltiples tareas simultáneamente.
+## Que es un proceso hijo?
 
-## ¿Qué es un PID?
+En sistemas operativos, un **proceso hijo** es un proceso que es creado por otro proceso, conocido como el **proceso padre**. Un proceso hijo hereda ciertos atributos del proceso padre, pero puede ejecutar tareas de forma independiente. Los procesos hijos son utiles para realizar tareas concurrentes, permitiendo que un programa ejecute multiples tareas simultaneamente.
 
-El **PID** (Process Identifier) es un número único asignado por el sistema operativo a cada proceso que se ejecuta en el sistema. Cada proceso en ejecución tiene un PID que lo identifica de manera única. El proceso padre y sus procesos hijos tienen PIDs diferentes. El proceso hijo puede conocer el PID de su proceso padre, pero el padre no necesariamente sabe el PID de su hijo de manera inmediata.
+## Que es un PID?
+
+El **PID** (Process Identifier) es un numero unico asignado por el sistema operativo a cada proceso que se ejecuta en el sistema. Cada proceso en ejecucion tiene un PID que lo identifica de manera unica. El proceso padre y sus procesos hijos tienen PIDs diferentes. El proceso hijo puede conocer el PID de su proceso padre, pero el padre no necesariamente sabe el PID de su hijo de manera inmediata.
 
 ## Comportamiento de los procesos hijos
 
-El comportamiento de los procesos hijos depende de la programación y el sistema operativo. En general:
+El comportamiento de los procesos hijos depende de la programacion y el sistema operativo. En general:
 
-- **Proceso padre**: Al invocar una llamada como `fork()`, el proceso padre crea un proceso hijo. Después de la creación, el proceso padre puede esperar la finalización del hijo, o seguir ejecutando otras tareas de forma concurrente.
+- **Proceso padre**: Al invocar una llamada como `fork()`, el proceso padre crea un proceso hijo. Despues de la creacion, el proceso padre puede esperar la finalizacion del hijo, o seguir ejecutando otras tareas de forma concurrente.
 - **Proceso hijo**: El proceso hijo empieza a ejecutarse en paralelo al proceso padre, generalmente ejecutando una tarea diferente de la que ejecutaba el padre.
 
-Ambos procesos, el padre y el hijo, continúan ejecutándose independientemente, permitiendo la ejecución de múltiples tareas en paralelo.
+Ambos procesos, el padre y el hijo, continúan ejecutandose independientemente, permitiendo la ejecucion de multiples tareas en paralelo.
 
-## Comunicación entre procesos hijos y padre
+## Comunicacion entre procesos hijos y padre
 
-La comunicación entre un proceso padre y sus procesos hijos se puede realizar de varias maneras. Algunas de las técnicas más comunes incluyen:
+La comunicacion entre un proceso padre y sus procesos hijos se puede realizar de varias maneras. Algunas de las tecnicas mas comunes incluyen:
 
-1. **Pipes (tuberías)**: Son mecanismos de comunicación que permiten que un proceso escriba datos en una tubería y otro proceso los lea desde la misma tubería.
-2. **Memoria compartida**: Permite que los procesos compartan una región de memoria común, donde pueden leer y escribir datos de manera eficiente.
-3. **Sockets**: Los sockets permiten la comunicación entre procesos, tanto dentro de la misma máquina como entre diferentes máquinas a través de una red.
-4. **Señales**: Los procesos pueden enviarse señales entre sí para notificar eventos o iniciar acciones específicas, como la interrupción de la ejecución de un proceso.
+1. **Pipes (tuberias)**: Son mecanismos de comunicacion que permiten que un proceso escriba datos en una tuberia y otro proceso los lea desde la misma tuberia.
+2. **Memoria compartida**: Permite que los procesos compartan una region de memoria comun, donde pueden leer y escribir datos de manera eficiente.
+3. **Sockets**: Los sockets permiten la comunicacion entre procesos, tanto dentro de la misma maquina como entre diferentes maquinas a traves de una red.
+4. **Senales**: Los procesos pueden enviarse senales entre si para notificar eventos o iniciar acciones especificas, como la interrupcion de la ejecucion de un proceso.
 
-## ¿Qué pasa con la PCB cuando se crea un proceso hijo y qué es la PCB?
+## Que pasa con la PCB cuando se crea un proceso hijo y que es la PCB?
 
-La **PCB** (Process Control Block) es una estructura de datos utilizada por el sistema operativo para almacenar información crítica sobre un proceso. Cada proceso tiene una PCB que contiene:
+La **PCB** (Process Control Block) es una estructura de datos utilizada por el sistema operativo para almacenar informacion critica sobre un proceso. Cada proceso tiene una PCB que contiene:
 
 - PID del proceso.
 - Estado del proceso (ejecutando, esperando, detenido).
 - Contadores de programa y registros.
-- Información sobre la memoria utilizada.
-- Punteros a estructuras de datos necesarias para la gestión del proceso.
+- Informacion sobre la memoria utilizada.
+- Punteros a estructuras de datos necesarias para la gestion del proceso.
 
-Cuando se crea un proceso hijo utilizando una llamada como `fork()`, el sistema operativo realiza una copia de la PCB del proceso padre, creando una nueva PCB para el proceso hijo. El proceso hijo hereda muchos atributos del proceso padre, pero ambos procesos tienen su propia PCB y contexto de ejecución.
+Cuando se crea un proceso hijo utilizando una llamada como `fork()`, el sistema operativo realiza una copia de la PCB del proceso padre, creando una nueva PCB para el proceso hijo. El proceso hijo hereda muchos atributos del proceso padre, pero ambos procesos tienen su propia PCB y contexto de ejecucion.
 
-## ¿Qué es la system call `fork()`?
+## Que es la system call `fork()`?
 
 La **system call `fork()`** es una llamada al sistema que se utiliza para crear un nuevo proceso hijo. Cuando un proceso invoca `fork()`, se crea un proceso hijo que comienza a ejecutarse en paralelo con el proceso padre.
 
 ### Comportamiento de `fork()`:
 
-- **En el proceso padre**: La llamada a `fork()` devuelve el PID del proceso hijo.
-- **En el proceso hijo**: La llamada a `fork()` devuelve `0`.
+- **En el proceso padre**: La llamada a `fork()` devuelve el **PID** del proceso hijo.
+- **En el proceso hijo**: La llamada a `fork()` devuelve **0**.
 
-Ambos procesos continúan ejecutándose después de la llamada a `fork()`, pero con sus propios contextos y ejecuciones concurrentes.
+Ambos procesos continúan ejecutandose despues de la llamada a `fork()`, pero con sus propios contextos y ejecuciones concurrentes.
 
-## Planificación de los procesos por parte del sistema operativo
+## Planificacion de los procesos por parte del sistema operativo
 
-El **sistema operativo** se encarga de gestionar la ejecución de los procesos, incluidas las tareas de planificación y asignación de tiempo de CPU a cada proceso. La **planificación de procesos** es el mecanismo utilizado por el sistema operativo para determinar qué procesos deben ejecutarse y en qué orden.
+El **sistema operativo** se encarga de gestionar la ejecucion de los procesos, incluidas las tareas de planificacion y asignacion de tiempo de CPU a cada proceso. La **planificacion de procesos** es el mecanismo utilizado por el sistema operativo para determinar que procesos deben ejecutarse y en que orden.
 
-- **Planificación preemptiva**: En sistemas multitarea, el sistema operativo puede interrumpir un proceso en ejecución para darle tiempo de CPU a otro proceso. Esto asegura que todos los procesos, incluidos los procesos hijos, reciban atención.
-- **Planificación no preemptiva**: En sistemas no preemptivos, un proceso debe liberar el control de la CPU antes de que otro proceso pueda ejecutarse. En este caso, los procesos pueden ejecutarse por un tiempo indefinido hasta que terminen su tarea o sean suspendidos.
+- **Planificacion preemptiva**: En sistemas multitarea, el sistema operativo puede interrumpir un proceso en ejecucion para darle tiempo de CPU a otro proceso. Esto asegura que todos los procesos, incluidos los procesos hijos, reciban atencion.
+- **Planificacion no preemptiva**: En sistemas no preemptivos, un proceso debe liberar el control de la CPU antes de que otro proceso pueda ejecutarse. En este caso, los procesos pueden ejecutarse por un tiempo indefinido hasta que terminen su tarea o sean suspendidos.
 
-El sistema operativo utiliza diferentes algoritmos de planificación (como Round Robin, Prioridades, FIFO, etc.) para gestionar la ejecución de los procesos de manera eficiente.
+El sistema operativo utiliza diferentes algoritmos de planificacion (como Round Robin, Prioridades, FIFO, etc.) para gestionar la ejecucion de los procesos de manera eficiente.
 
-## Comportamiento en sistemas multinúcleo y mononúcleo
+## Comportamiento en sistemas multinucleo y mononucleo
 
-El comportamiento de los procesos hijos puede variar dependiendo de si el sistema operativo está corriendo en un **procesador multinúcleo** o **mononúcleo**.
+El comportamiento de los procesos hijos puede variar dependiendo de si el sistema operativo esta corriendo en un **procesador multinucleo** o **mononucleo**.
 
-### En un sistema **mononúcleo**:
-- **Solo un proceso a la vez** puede ejecutarse en el CPU físico, incluso si hay múltiples procesos hijos. El sistema operativo utiliza un mecanismo de **multitarea** para cambiar entre los procesos, dándole a cada uno una fracción de tiempo en la CPU. 
-- La concurrencia es simulada mediante la rápida conmutación de contexto entre los procesos padre e hijo.
+### En un sistema **mononucleo**:
+- **Solo un proceso a la vez** puede ejecutarse en el CPU fisico, incluso si hay multiples procesos hijos. El sistema operativo utiliza un mecanismo de **multitarea** para cambiar entre los procesos, dándole a cada uno una fraccion de tiempo en la CPU. 
+- La concurrencia es simulada mediante la rapida conmutacion de contexto entre los procesos padre e hijo.
 
-### En un sistema **multinúcleo**:
-- El sistema operativo puede asignar diferentes núcleos del procesador a diferentes procesos, lo que permite que los procesos padre e hijo **ejecuten en paralelo** en diferentes núcleos. Esto mejora el rendimiento de las aplicaciones concurrentes.
-- Sin embargo, el sistema operativo sigue gestionando la ejecución de los procesos y asegurando que se respeten las reglas de concurrencia, como el manejo adecuado de los recursos compartidos.
+### En un sistema **multinucleo**:
+- El sistema operativo puede asignar diferentes nucleos del procesador a diferentes procesos, lo que permite que los procesos padre e hijo **ejecuten en paralelo** en diferentes nucleos. Esto mejora el rendimiento de las aplicaciones concurrentes.
+- Sin embargo, el sistema operativo sigue gestionando la ejecucion de los procesos y asegurando que se respeten las reglas de concurrencia, como el manejo adecuado de los recursos compartidos.
 
 # Libreria: `#include <unistd.h>`
 La libreria `unistd.h` proporciona acceso a funciones y constantes del sistema operativo Unix y sistemas basados en Unix. Algunas de sus funciones mas utilizadas son:
