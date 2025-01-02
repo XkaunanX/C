@@ -19,8 +19,6 @@ Para evitar estos problemas, se utilizan mecanismos de **sincronizacion** que ga
 - **Mutexes (Mutual Exclusion Locks)**: Permiten que un hilo adquiera un bloqueo sobre la seccion critica, garantizando que otros hilos no puedan acceder a ella hasta que el primer hilo haya terminado.
 - **Semaforos**: Son variables de sincronizacion que controlan el acceso a un recurso limitado. En lugar de bloquearse completamente, los semaforos permiten un control mas flexible sobre el acceso concurrente.
 
-En el codigo que se presenta mas adelante, se utilizan semaforos y funciones de hilos para manejar estas situaciones y garantizar que las secciones criticas sean ejecutadas de manera segura.
-
 # Librerias
 
 ### `#include <pthread.h>`
